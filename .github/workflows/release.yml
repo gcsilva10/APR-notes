@@ -57,49 +57,27 @@ jobs:
           fi
           find build/ce -name '*.8xp' -exec cp {} bundle_inputs/ \;
 
-      - name: Build smaller group bundles
+      - name: Validate unique calculator variable names
         shell: bash
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          files=(bundle_inputs/*.8xv bundle_inputs/*.8xp)
-          test ${#files[@]} -gt 0
-          group=()
-          total=0
-          part=1
-
-          make_group() {
-            test ${#group[@]} -gt 0 || return 0
-            printf -v output 'artifact/NOTES_%02d.8xg' "$part"
-            args=(--oformat 8xg-auto-extract --output "$output")
-            for item in "${group[@]}"; do
-              args+=(--iformat 8x --input "$item")
-            done
-            convbin "${args[@]}"
-            part=$((part+1))
-            group=()
-            total=0
-          }
-
-          for item in "${files[@]}"; do
-            bytes=$(stat -c '%s' "$item")
-            if [ ${#group[@]} -gt 0 ] && \
-               [ $((total+bytes)) -gt 30000 ]; then
-              make_group
-            fi
-            group+=("$item")
-            total=$((total+bytes))
-          done
-          make_group
+          python3 - <<'PY'
+          from pathlib import Path
+          paths = list(Path('bundle_inputs').glob('*.8xv')) + list(Path('bundle_inputs').glob('*.8xp'))
+          assert paths, "No calculator files found"
+          names = [p.stem.upper() for p in paths]
+          assert len(names) == len(set(names)), "Duplicate calculator variable names"
+          print(f"Prepared {len(paths)} individually named calculator files")
+          PY
 
       - name: Upload artifact bundle
         uses: actions/upload-artifact@v4
         with:
           name: notes-template-artifacts
-          path: artifact/NOTES_*.8xg
+          path: bundle_inputs/*
 
       - name: Publish to release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: artifact/NOTES_*.8xg
+          files: bundle_inputs/*
