@@ -1,0 +1,26 @@
+APR 02 - FORMULAS/EXERCICIOS
+$s=w^Tx+b=\sum_iw_ix_i+b$
+$y=hardlim(s)$: 1 se s>=0, senao 0.
+ERRO: $e=t-y$.
+REGRA ONLINE: $w'=w+\eta ex$; $b'=b+\eta e$.
+REGRA BATCH (aulas): $W'=W+EX^T$, $b'=b+E1$ (eta implicita 1).
+FRONTEIRA: $w_1x_1+w_2x_2+b=0$.
+EX 1: x=(1,0), w=(.2,-.4), b=-.3, t=1.
+s=.2-.3=-.1; y=0; e=1.
+eta=.5 => w'=(.7,-.4); b'=.2.
+Recalcular: s'=.7+.2=.9 => y'=1.
+EX 2: x=(1,1), w=(1,1), b=-1.5;
+s=.5 => y=1 (porta AND para este ponto).
+AND com w=(1,1), b=-1.5:
+(0,0)->0; (0,1)->0; (1,0)->0; (1,1)->1.
+OR com w=(1,1),b=-.5.
+XOR impossivel com UMA fronteira linear.
+EX FRONTEIRA:
+2x1+4x2-8=0 => x2=2-.5x1.
+DIAGRAMA DE CICLO POR EPOCA
+Inicializar W,b
+  -> s=WX+b -> y=hardlim(s)
+  -> e=T-Y -> atualizar W,b
+  -> contar erros
+  -> erros=0? SIM: FIM
+               NAO: proxima epoca.

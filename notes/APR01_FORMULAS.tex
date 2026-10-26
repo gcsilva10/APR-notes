@@ -1,0 +1,28 @@
+APR 01 - FORMULAS/EXERCICIOS
+MODELO LINEAR: $\hat y=w_0+\sum_{j=1}^{M}w_jx_j$.
+Bias coluna de 1s: $\tilde X=[1,X]$.
+Minimos quadrados (se invertivel):
+$W=(X^TX)^{-1}X^TT$.
+Com numpy e preferivel lstsq a inversao explicita.
+CLASSIFICACAO: $Y=1$ se $\hat y\ge 0.5$; caso contrario 0.
+EX: w=[0.1,0.5,0.2], x=[0.6,0.3]:
+y=.1+.5*.6+.2*.3=.46 => classe 0.
+NORMALIZAR: min 50 max 150, x=125 => (125-50)/100=.75.
+EX DATA LEAKAGE:
+Treino=[1,3,5], teste=[100].
+Media treino=3; media global=27.25.
+Imputar com media global usa informacao do teste!
+EX SENSIBILIDADE:
+TP=18 FN=2 => 18/20=0.90.
+EX ESPECIFICIDADE:
+TN=72 FP=8 => 72/80=0.90.
+CICLO DE PIPELINE
+Dados brutos
+  -> SPLIT
+  -> Treino: aprender mediana, minimo e maximo
+  -> aplicar transformacao no treino e teste
+  -> treinar pesos APENAS no treino
+  -> previsoes teste
+  -> TP TN FP FN -> metricas
+  -> analisar e corrigir pipeline
+ATENCAO: ajustar preprocessing de novo no teste e errado.

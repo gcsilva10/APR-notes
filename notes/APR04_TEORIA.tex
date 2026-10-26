@@ -1,0 +1,21 @@
+APR 04 - TEORIA OTIMIZACAO/DEEP
+Rede profunda tem varias camadas; aprende representacoes hierarquicas.
+Problemas: custo computacional, muitos parametros, overfitting e gradientes que desaparecem/explodem.
+Backprop calcula gradientes; optimizer define como atualizar parametros.
+GD batch: gradiente dataset inteiro; SGD: por amostra; mini-batch: blocos intermedios.
+Learning rate muito alto pode divergir; muito baixo e lento.
+Momentum suaviza oscilacoes usando historico de gradientes.
+RMSProp ajusta passo por parametro a partir dos quadrados recentes.
+Adam combina momentum (primeiro momento) e escala adaptativa (segundo momento), com correcao de bias.
+ReLU: reduz saturacao para z>0 e e simples; leaky ReLU ajuda contra dying ReLU.
+Sigmoid e tanh podem saturar; derivadas pequenas nas caudas.
+Vanishing gradient: primeiras camadas recebem gradientes quase zero; exploding gradient: magnitude cresce.
+Regularizacao L1 favorece esparsidade; L2 penaliza pesos grandes; dropout reduz coadaptacao.
+Data augmentation cria variacoes de treino relevantes; nao alterar semantica dos labels.
+Early stopping usa validacao, nunca conjunto de teste.
+Batch normalization normaliza ativacoes dentro de lotes e tem parametros treinaveis.
+Deep autoencoder: encoder comprime em representacao latente, decoder reconstrui input; usado para reducao, features ou anomalias.
+Transfer learning reutiliza pesos de modelo pre-treinado e ajusta camada(s).
+Parametros sao W,b; hiperparametros sao eta, arquitetura, batch size, epocas, lambda.
+Erro treino baixo e val alto => overfit. Ambos altos => underfit.
+Para classificar: sigmoid+BCE ou softmax+cross entropy, conforme classes.

@@ -1,0 +1,18 @@
+APR 01 - TEORIA PIPELINE
+Etapa 1 DATA SELECTION: escolher observacoes e colunas relevantes; features vs target.
+Etapa 2 SPLIT: treino e teste separados antes de estimar estatisticas. Pode usar validacao para modelos/hiperparametros.
+Etapa 3 PREPROCESSING: valores em falta, zeros impossiveis, outliers e duplicados; imputacao pela media/mediana/moda. Calcular parametros apenas no treino.
+Etapa 4 TRANSFORMATION: normalizacao min-max ou standardizacao; encoder de categorias; reducao dimensional se justificada.
+Etapa 5 MODELLING: selecionar classificador/regressor; inicializar parametros; fazer fit.
+Etapa 6 EVALUATION: medir desempenho em dados nao vistos; matriz de confusao e metricas.
+Regressao: saida continua. Classificacao: classes discretas; threshold converte score.
+No exemplo Diabetes: Glucose, BMI, Age sao 3 entradas; Outcome e label binario.
+Modelo linear treinado por minimos quadrados pode ser usado para classificar com limiar 0.5, mas nao e regressao logistica.
+Normalizacao serve para manter escalas comparaveis, influenciando treino e convergencia.
+Generalizacao significa manter resultados fora do treino.
+Erro comum: calcular max/min no dataset todo antes de dividir; isso e leakage.
+Regra de ouro: FIT transformadores so no treino, TRANSFORM no treino/validacao/teste.
+Balanced vs imbalanced: accuracy isolada pode nao bastar.
+TP positivo correto; FP alarme errado; FN positivo nao detetado; TN negativo correto.
+Se SE prioritario: reduzir FN; se SP prioritario: reduzir FP.
+Reprodutibilidade: usar seed, documentar split, registar parametros.

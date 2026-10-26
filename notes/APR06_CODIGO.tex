@@ -1,0 +1,38 @@
+APR 06 - CODIGO RNN/LSTM/ECG
+import numpy as np
+from keras.models import Sequential
+from keras.layers import Input,LSTM,Dense
+from keras.optimizers import Adam
+# exemplo de sequencias:
+# X.shape = (N, time_steps, features)
+net=Sequential([
+ Input(shape=(25,1)),
+ LSTM(16,return_sequences=True),
+ LSTM(8),
+ Dense(1,activation="sigmoid")
+])
+net.compile(optimizer=Adam(learning_rate=.001),
+ loss="binary_crossentropy",metrics=["accuracy"])
+net.fit(Xtrain,Ttrain,validation_data=(Xval,Tval),
+ epochs=50,batch_size=32)
+p=(net.predict(Xtest).ravel()>=.5).astype(int)
+# ECG: preparar segmentos do mesmo tamanho
+FS=300; DUR=30; NS=FS*DUR
+sinal=sinal.astype(float)
+sinal=(sinal-sinal.mean())/(sinal.std()+1e-8)
+# 9000 samples -> (9000,1), depois batch
+xraw=sinal[:,None]
+# Intervalos RR: indices dos picos R
+from scipy.signal import find_peaks,resample_poly
+peaks,_=find_peaks(sinal,distance=int(.3*FS))
+rr=np.diff(peaks)/FS
+hr=60/rr
+# reamostrar de 300Hz para 50Hz:
+sinal50=resample_poly(sinal,50,300)
+# train/test sempre por registo, nao por janela
+from sklearn.model_selection import train_test_split
+itr,ite=train_test_split(np.arange(len(T)),
+ test_size=.3,random_state=42,stratify=T)
+# CNN input (N,9000,1)
+# LSTM RR input (N,25,1)
+# LSTM beats (N,25,181) no exemplo das aulas.

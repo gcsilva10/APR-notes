@@ -1,0 +1,28 @@
+APR 06 - FORMULAS/EXERCICIOS
+RNN SIMPLES:
+$h_t=\tanh(W_xx_t+W_hh_{t-1}+b)$.
+$y_t=W_yh_t+b_y$ (ou ativacao adequada).
+UNROLL: t1 -> t2 -> t3 -> t4; pesos partilhados.
+LSTM:
+$f_t=\sigma(W_f[h_{t-1},x_t]+b_f)$
+$i_t=\sigma(W_i[h_{t-1},x_t]+b_i)$
+$\tilde c_t=\tanh(W_c[h_{t-1},x_t]+b_c)$
+$c_t=f_tc_{t-1}+i_t\tilde c_t$
+$o_t=\sigma(W_o[h_{t-1},x_t]+b_o)$
+$h_t=o_t\tanh(c_t)$
+EX LSTM ESCALAR:
+c_ant=.4; f=.5; i=.8; c_tilde=.25
+c=.5*.4+.8*.25=.4.
+o=.75, tanh(.4) aprox .38 -> h=.285.
+ECG: FS=300 Hz, duracao=30s
+N=300*30=9000 amostras.
+Intervalo RR: $\Delta t=\frac{\Delta indices}{F_s}$.
+EX picos em 100 e 400 com fs=300:
+RR=300/300=1s; FC=60/RR=60 bpm.
+DIAGRAMA CICLO TEMPORAL
+x1 -> [LSTM] -> h1,c1
+x2 -> [LSTM] -> h2,c2
+x3 -> [LSTM] -> h3,c3 -> Dense -> classe
+            pesos iguais em todos os tempos
+CICLO TREINO: sequencia -> forward temporal
+ -> loss -> BPTT -> update -> repetir.

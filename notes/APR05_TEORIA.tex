@@ -1,0 +1,20 @@
+APR 05 - TEORIA CNN
+CNN: rede projetada para dados com estrutura espacial/temporal local (imagens, ECG, audio).
+Convolucao aplica filtros partilhados por multiplas posicoes; aprende features automaticamente.
+Feature map: resultado de cada filtro. Varios filtros => varios canais de saida.
+Nas primeiras camadas surgem edges, linhas e texturas; nas profundas, combinacoes e padroes abstratos.
+Local receptive field: cada neuronio observa regiao local. Weight sharing reduz parametros face a dense.
+Stride controla deslocamento; padding controla tamanho/bordas.
+Kernel KxK normalmente aprendido por backprop.
+A operacao implementada por bibliotecas costuma ser cross-correlation (sem inverter kernel).
+ReLU introduz nao linearidade apos convolucao.
+Max pooling resume valores mais altos; average pooling calcula media; reduzem dimensoes e sensibilidade a pequenas translacoes.
+Pooling nao tem pesos treinaveis na forma comum.
+Flatten transforma mapas 3D em vetor para Dense; GlobalAveragePooling resume cada canal e reduz parametros.
+Conv1D para series temporais/ECG; Conv2D para imagens.
+Tensor imagem (H,W,C); batch comum (N,H,W,C) no Keras.
+CNN nao e invariante a toda rotacao/translacao; augmentation melhora robustez.
+Classificacao ECG: CNN recebe sinal bruto normalizado, aprende padroes locais em vez de features manuais.
+Comparacao MLNN: normalmente precisa de features extraidas manualmente; CNN aprende filtros.
+Overfitting: usar augmentation, dropout, regularizacao, early stopping.
+Output shapes e contagem de parametros sao exercicios tipicos.

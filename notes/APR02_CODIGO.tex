@@ -1,0 +1,33 @@
+APR 02 - CODIGO PERCEPTRON
+import numpy as np
+X=np.array([[0,0,1,1],[0,1,0,1]])
+T=np.array([[0,0,0,1]])
+M,N=X.shape
+W=np.zeros((1,M)); b=0.
+eta=1.
+for epoch in range(30):
+    s=W@X+b
+    Y=(s>=0).astype(int)
+    E=T-Y
+    erros=np.count_nonzero(E)
+    print(epoch,erros)
+    if erros==0: break
+    # batch usado no material:
+    W=W+eta*(E@X.T)
+    b=b+eta*E.sum()
+print(W,b)
+# Online, por exemplo:
+w=np.zeros(M); bias=0.
+for epoch in range(30):
+    erros=0
+    for i in range(N):
+        x=X[:,i]; t=T[0,i]
+        y=int(w@x+bias>=0)
+        e=t-y
+        w+=eta*e*x
+        bias+=eta*e
+        erros+=int(e!=0)
+    if erros==0: break
+# fronteira 2D:
+# x2=-(w1*x1+b)/w2 (se w2!=0)
+# nunca misturar dimensoes: X=(M,N).

@@ -1,0 +1,34 @@
+APR 05 - CODIGO CNN
+from keras.models import Sequential
+from keras.layers import (Input,Conv2D,Conv1D,
+ MaxPooling2D,MaxPooling1D,Flatten,
+ GlobalAveragePooling1D,Dense,Dropout)
+# Imagens grayscale 28x28
+cnn=Sequential([
+ Input(shape=(28,28,1)),
+ Conv2D(8,3,activation="relu",padding="same"),
+ MaxPooling2D(pool_size=2),
+ Conv2D(16,3,activation="relu"),
+ MaxPooling2D(pool_size=2),
+ Flatten(),Dense(32,activation="relu"),
+ Dense(10,activation="softmax")
+])
+cnn.compile(optimizer="adam",
+ loss="sparse_categorical_crossentropy",
+ metrics=["accuracy"])
+# ECG bruto: sinal shape=(N,9000,1)
+ecg=Sequential([
+ Input(shape=(9000,1)),
+ Conv1D(16,9,padding="same",activation="relu"),
+ MaxPooling1D(4),
+ Conv1D(32,5,activation="relu"),
+ GlobalAveragePooling1D(),
+ Dense(1,activation="sigmoid")
+])
+ecg.compile(optimizer="adam",
+ loss="binary_crossentropy",metrics=["accuracy"])
+# Construir input de canais:
+Xcnn=Xsignal[...,None]
+# maxpool e conv calculam automaticamente as shapes
+cnn.summary(); ecg.summary()
+# Na comparacao usar MESMOS ids treino/val/teste.

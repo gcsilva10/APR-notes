@@ -1,0 +1,38 @@
+APR 01 - CODIGO PIPELINE
+import numpy as np
+import pandas as pd
+df=pd.read_csv("diabetes.csv")
+X=df[["Glucose","BMI","Age"]].copy()
+T=df["Outcome"].copy()
+rng=np.random.default_rng(42)
+ids=rng.permutation(len(X))
+n=int(.7*len(X))
+itr,ite=ids[:n],ids[n:]
+Xtr=X.iloc[itr].copy()
+Xte=X.iloc[ite].copy()
+Ttr=T.iloc[itr].to_numpy()
+Tte=T.iloc[ite].to_numpy()
+for c in ["Glucose","BMI"]:
+    med=Xtr.loc[Xtr[c]!=0,c].median()
+    Xtr.loc[Xtr[c]==0,c]=med
+    Xte.loc[Xte[c]==0,c]=med
+for c in Xtr.columns:
+    lo,hi=Xtr[c].min(),Xtr[c].max()
+    if hi!=lo:
+        Xtr[c]=(Xtr[c]-lo)/(hi-lo)
+        Xte[c]=(Xte[c]-lo)/(hi-lo)
+A=np.c_[np.ones(len(Xtr)),Xtr.to_numpy()]
+W=np.linalg.lstsq(A,Ttr,rcond=None)[0]
+B=np.c_[np.ones(len(Xte)),Xte.to_numpy()]
+Y=(B@W>=.5).astype(int)
+TP=np.sum((Tte==1)&(Y==1))
+TN=np.sum((Tte==0)&(Y==0))
+FP=np.sum((Tte==0)&(Y==1))
+FN=np.sum((Tte==1)&(Y==0))
+acc=(TP+TN)/len(Y)
+se=TP/(TP+FN) if TP+FN else 0
+sp=TN/(TN+FP) if TN+FP else 0
+f1=2*TP/(2*TP+FP+FN) if 2*TP+FP+FN else 0
+print(acc,se,sp,f1)
+# Pipeline do PDF utiliza equacao normal com inv.
+# lstsq evita falha por matriz singular.

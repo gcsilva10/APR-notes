@@ -1,0 +1,19 @@
+APR 03 - TEORIA MLNN/BACKPROP
+MLNN/MLP: varias camadas de neuronios; input, hidden, output.
+Rede feedforward: informacao flui da entrada para saida, sem memoria temporal.
+Camadas escondidas com funcoes nao lineares permitem fronteiras nao lineares e problemas como XOR.
+A composicao de varias camadas LINEARES continua linear, por isso precisa-se de ativacoes nao lineares.
+W_l: pesos entre camadas; b_l: vieses; pesos e vieses sao PARAMETROS aprendidos.
+Numero de camadas/neuronios, ativacao, epocas, learning rate, batch size sao HIPERPARAMETROS.
+Forward propagation calcula as ativacoes e predicoes.
+Loss quantifica discrepancia predicao/target (MSE para regressao; BCE para classificacao binaria).
+Backpropagation: regra da cadeia, propaga gradientes da saida para camadas anteriores.
+Nao confundir erro e=t-y com gradiente dL/dy: sinal/fator dependem da loss adotada.
+Sigmoid produz (0,1), derivada no maximo 0.25; satura nos extremos, favorece vanishing gradients.
+ReLU e simples e frequentemente facilita treino profundo, mas neuronios podem ficar inativos.
+Output linear em regressao; sigmoid em classificacao binaria; softmax em multiclasse.
+Epoch: uma passagem por treino; batch: subgrupo de exemplos; iteracao: uma atualizacao.
+Batch GD usa o conjunto todo; mini-batch GD usa lotes; SGD classico usa amostras individuais.
+O exemplo manual de APR usa pesos W1, W2 e sigmoid na hidden, com saida linear.
+Com varios exemplos, combinar gradientes requer coerencia com soma ou media na loss.
+Avaliar separadamente treino, validacao e teste; o material manual simplifica e avalia so treino.

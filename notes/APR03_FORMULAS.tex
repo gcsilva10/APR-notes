@@ -1,0 +1,27 @@
+APR 03 - FORMULAS/EXERCICIOS
+FORWARD:
+$z_1=W_1x+b_1$; $h=\sigma(z_1)$.
+$z_2=W_2h+b_2$; $\hat y=f(z_2)$.
+SIGMOID: $\sigma(z)=\frac{1}{1+e^{-z}}$.
+DERIVADA: $\sigma'(z)=\sigma(z)(1-\sigma(z))$.
+ReLU: $f(z)=\max(0,z)$; derivada 1 se z>0, 0 se z<0.
+MSE: $L=\frac{1}{N}\sum(t-\hat y)^2$.
+BCE: $L=-[t\ln y+(1-t)\ln(1-y)]$ (uma amostra).
+BACKPROP: $\delta_2=(\hat y-t)f'(z_2)$ para MSE/2.
+$\partial L/\partial W_2=\delta_2h^T$.
+$\delta_1=(W_2^T\delta_2)\odot\sigma'(z_1)$.
+$\partial L/\partial W_1=\delta_1x^T$.
+GD: $W'=W-\eta\nabla_W L$.
+EX (saida linear, L=e^2):
+x=(1,2); W1 rows: [.1,0], [0,.2], [.5,-.5].
+h=(.1,.4,-.5). W2=(1,-1,1), b=0.
+y=.1-.4-.5=-.8; t=0; e=t-y=.8.
+$L=e^2=.64$.
+Gradiente L em W2: $-2eh=(-.16,-.64,.8)$.
+eta=1 => W2 novo=(1.16,-.36,.2).
+Se usar L=e^2 em vez de L=e^2/2, aparece fator 2!
+DIAGRAMA DO CICLO
+x -> W1,b1 -> ativacao h -> W2,b2 -> y
+t -------------------------------> erro
+erro -> delta saida -> delta hidden
+         -> gradientes -> atualiza pesos -> repetir.

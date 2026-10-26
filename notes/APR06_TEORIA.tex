@@ -1,0 +1,19 @@
+APR 06 - TEORIA RNN/LSTM/ECG
+MLNN feedforward processa exemplos independentes. RNN usa informacao anterior para dados sequenciais (texto, sinais, series temporais).
+Recorrencia externa pode usar outputs passados; interna usa estado escondido anterior.
+Estado h_t e memoria condensada da sequencia ate instante t.
+Pesos recorrentes partilhados nos passos temporais; comprimento da sequencia pode variar conforme arquitetura.
+Backpropagation Through Time (BPTT) propaga gradientes pelos instantes temporais. Em sequencias longas sofre vanishing/exploding gradients.
+LSTM inclui cell state c_t e gates: forget f (o que reter), input i (o que escrever), output o (o que expor).
+GRU simplifica com update/reset gates e menos parametros.
+RNN simples pode esquecer dependencias distantes. LSTM protege melhor o fluxo de informacao.
+Arquiteturas many-to-one para classificacao de uma sequencia; many-to-many para saida por instante.
+ECG: sinal eletrico do coracao. Onda P, complexo QRS e onda T; pico R serve para intervalos RR.
+Fibrilhacao auricular (AF): classificacao normal versus AF usando ECG.
+MLNN sobre ECG: calcula features (RR medio, RRstd, frequencia cardiaca); CNN usa sinal bruto e extrai padroes locais; LSTM modela sequencias e dependencias temporais.
+Dados ECG: FS=300 Hz, janela 30s -> 9000 samples; normalizacao por media e desvio.
+Sequencias LSTM no codigo podem ser raw (sinal reamostrado), RR (intervalos) ou beats (recortes batimento+RR).
+Equilibrar classes com cuidado; dividir por REGISTO/paciente antes de segmentar para nao ocorrer leakage.
+Input LSTM: (amostras, time_steps, features).
+Comparar modelos nos mesmos conjuntos, se possivel mesmos pacientes, e avaliar SE/SP/F1/AC.
+Nao confundir padroes temporais e espaciais: CNN capta local; LSTM pode captar dependencias distantes.

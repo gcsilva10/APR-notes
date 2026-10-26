@@ -1,0 +1,36 @@
+APR 00 - CODIGO ESSENCIAL (PYTHON)
+import numpy as np
+import pandas as pd
+a=np.array([1,2,3]); a.shape
+A=np.array([[1,2],[3,4]])
+A.shape; A.T; A@A
+np.mean(a); np.var(a); np.std(a)
+np.min(a); np.max(a); np.sum(a)
+np.zeros((2,3)); np.ones((2,3))
+np.arange(5); np.linspace(0,1,6)
+np.random.seed(42)
+idx=np.random.permutation(100)
+df=pd.read_csv("diabetes.csv")
+df.head(); df.shape; df.columns
+df.describe(); df.isna().sum()
+X=df[["Glucose","BMI","Age"]].copy()
+T=df["Outcome"].copy()
+itr=idx[:70]; ite=idx[70:]
+tr=X.iloc[itr].copy(); te=X.iloc[ite].copy()
+for c in ["Glucose","BMI"]:
+    med=tr.loc[tr[c]!=0,c].median()
+    tr.loc[tr[c]==0,c]=med
+    te.loc[te[c]==0,c]=med
+for c in tr.columns:
+    lo=tr[c].min(); hi=tr[c].max()
+    tr[c]=(tr[c]-lo)/(hi-lo)
+    te[c]=(te[c]-lo)/(hi-lo)
+# Usar os parametros do TREINO no teste!
+tp=np.sum((T==1)&(Y==1))
+tn=np.sum((T==0)&(Y==0))
+fp=np.sum((T==0)&(Y==1))
+fn=np.sum((T==1)&(Y==0))
+se=tp/(tp+fn); sp=tn/(tn+fp)
+f1=2*tp/(2*tp+fp+fn)
+# Nota: Y e T devem referir-se ao MESMO conjunto.
+# Ciclo: load -> split -> fit preprocess -> transform -> fit -> predict -> metrics.

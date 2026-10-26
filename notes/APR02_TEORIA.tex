@@ -1,0 +1,17 @@
+APR 02 - TEORIA PERCEPTRON
+Neuronio artificial: combina entradas pelos pesos, soma bias, aplica funcao de ativacao.
+Peso controla influencia de feature; bias desloca fronteira de decisao.
+hardlim: limiar rigido, 0 para entrada negativa, 1 para nao negativa.
+Perceptron de camada unica define hiperplano linear de separacao. Em 2D e uma reta.
+Problemas AND e OR sao linearmente separaveis; XOR nao e.
+O perceptron aprende com exemplos rotulados, corrigindo pesos quando ha erro.
+Learning rate eta controla tamanho da alteracao; maior nao garante convergencia melhor.
+Online: atualizacao por amostra; batch: agregado de todas as amostras por epoca. Conferir qual variante o enunciado pede.
+Epoca: passagem por todos os exemplos; iteracao pode significar atualizacao individual.
+Convergencia garantida para dados linearmente separaveis sob condicoes apropriadas da regra classica.
+Dados nao separaveis podem impedir erro zero ou provocar oscilacoes.
+N inputs, 1 output: W tem N pesos e um bias; dimensoes dependem de convencao de linhas/colunas.
+Em ficheiro P2a, X tem forma (M,N), W tem (1,M), T/Y (1,N).
+Fronteira satisfaz soma ponderada+bias=0; pontos de lados opostos recebem classes diferentes.
+Para XOR e outras fronteiras complexas usar varias camadas com ativacao nao linear.
+Perceptron classifica mas nao fornece probabilidades calibradas.

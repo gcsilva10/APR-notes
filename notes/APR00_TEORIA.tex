@@ -1,0 +1,22 @@
+APR 00 - TEORIA BASES
+IA: sistemas com comportamentos inteligentes.
+ML: aprende padroes a partir dos dados.
+DL: ML com redes profundas e varias camadas.
+Supervisionado: pares (X,T); classificacao ou regressao.
+Nao supervisionado: sem etiquetas; clustering.
+Reforco: agente, ambiente, recompensa, politica.
+FEATURE=variavel de entrada; TARGET=valor a prever.
+Pipeline: selecionar dados; separar treino/teste; limpar faltas; transformar/normalizar; treinar; avaliar.
+PRE-PROCESSAMENTO: corrigir erros, remover duplicados, imputar valores em falta. Nos dados Pima, zeros de glucose/BMI podem ser considerados ausentes. Substituir pela mediana do TREINO.
+DATA LEAKAGE: usar informacao de teste na construcao do modelo; cria avaliacao enganadora. Fazer split ANTES do preprocessing e aplicar ao teste os parametros aprendidos no treino.
+Normalizacao min-max: escalas numa faixa tipica [0,1], podendo o teste exceder a faixa. Standardizacao: media=0, desvio=1 no treino.
+Dataset desequilibrado: accuracy pode enganar. Examinar SE, SP, precision e F1; usar estratificacao.
+Treino ajusta pesos; validacao escolhe hiperparametros; teste so avalia no fim.
+Generalizacao: bom desempenho em dados nao vistos.
+Underfitting: desempenho fraco em treino e teste, modelo simples/insuficiente.
+Overfitting: treino bom, teste fraco; memoriza ruido.
+Seed fixa torna experiencias reprodutiveis (na medida do possivel).
+NumPy: arrays numericos homogeneos; broadcasting; shape e operacoes matriciais.
+Pandas: Series unidimensional com indice; DataFrame tabela de colunas possivelmente heterogeneas; loc por rotulos, iloc por posicao.
+Confusion matrix: TP acerto positivo, TN acerto negativo, FP falso alarme, FN positivo perdido.
+SIGLAS: N=amostras; M=features; T=target; Y=predicao; W=pesos; b=bias.

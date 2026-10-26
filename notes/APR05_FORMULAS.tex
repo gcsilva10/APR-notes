@@ -1,0 +1,28 @@
+APR 05 - FORMULAS/EXERCICIOS
+CONVOLUCAO 2D:
+$O=\lfloor\frac{I+2P-K}{S}\rfloor+1$.
+Por dimensao: altura e largura separadamente.
+I=tamanho input, K=kernel, P=padding, S=stride.
+EX: input 6x6, kernel 3x3, P=0, S=1
+O=(6-3)/1+1=4 => mapa 4x4.
+EX: 32x32, K=5, P=2, S=1 => 32x32.
+EX: 28x28, K=3, P=0, S=2
+floor((28-3)/2)+1=13.
+PARAMETROS CONV:
+$(K_hK_wC_{in}+1)C_{out}$ (com bias).
+EX: 3x3, 1 canal, 8 filtros => (9+1)*8=80.
+EX: 3x3, 16 canais, 32 filtros:
+(144+1)*32=4640.
+MAXPOOL 2x2 stride 2: 8x8 -> 4x4;
+recebe [1,4;2,3] => max=4.
+EX CONVOLUCAO SIMPLES:
+janela [1,2;3,4], kernel [1,0;0,-1]:
+soma =1-4=-3 (cross-correlation usual).
+DIAGRAMA
+Imagem -> Conv -> ReLU -> Pool
+        -> Conv -> ReLU -> Pool
+        -> Flatten/GlobalAvgPool -> Dense -> classe
+CICLO TREINO
+Batch imagens -> forward conv/pool/dense
+ -> loss -> backprop filtros e dense
+ -> update -> repetir.

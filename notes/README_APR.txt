@@ -1,0 +1,1 @@
+APR - 7 blocos, 3 notas por bloco: FORMULAS (inclui exercicios e diagramas textuais de ciclos), TEORIA e CODIGO. Criado a partir dos materiais T/P0 a T/P3. Verificar permissão de uso na frequência. As expressões entre $ usam sintaxe TeX compatível com o leitor. Para build: Actions > Build and Release.

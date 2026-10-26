@@ -1,0 +1,25 @@
+APR 04 - FORMULAS/EXERCICIOS
+Gradient descent: $\theta_{k+1}=\theta_k-\eta\nabla L(\theta_k)$.
+EX: L(w)=(w-3)^2; w=1; eta=.1.
+grad=2(1-3)=-4; w'=1-.1*(-4)=1.4.
+PROXIMOS: grad=-3.2; w''=1.72.
+Momentum: $v_t=\beta v_{t-1}+(1-\beta)g_t$;
+$\theta_t=\theta_{t-1}-\eta v_t$ (uma convencao).
+ADAM:
+$m_t=\beta_1m_{t-1}+(1-\beta_1)g_t$
+$v_t=\beta_2v_{t-1}+(1-\beta_2)g_t^2$
+$\hat m_t=m_t/(1-\beta_1^t)$
+$\hat v_t=v_t/(1-\beta_2^t)$
+$\theta_t=\theta_{t-1}-\eta\hat m_t/(\sqrt{\hat v_t}+\epsilon)$
+REGULARIZACAO L2: $L_{total}=L_{dados}+\lambda\sum w_i^2$.
+DROP OUT: desliga neuronios aleatoriamente so no treino.
+EARLY STOPPING: parar quando val_loss nao melhora.
+EX DIMENSOES:
+Camada Dense com 3 entradas, 4 neuronios:
+pesos=3*4=12, biases=4; total=16.
+DIAGRAMA CICLO TREINO
+Init parametros -> mini-batch -> forward
+ -> loss -> backward -> optimizer.step
+ -> proximo batch -> fim epoca
+ -> validar -> guardar melhor modelo
+ -> parar/continuar.
