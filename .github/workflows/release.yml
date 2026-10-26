@@ -57,19 +57,40 @@ jobs:
           fi
           find build/ce -name '*.8xp' -exec cp {} bundle_inputs/ \;
 
-      - name: Build single-file group bundle
+      - name: Build smaller group bundles
+        shell: bash
         run: |
+          set -euo pipefail
           shopt -s nullglob
           files=(bundle_inputs/*.8xv bundle_inputs/*.8xp)
-          if [ ${#files[@]} -eq 0 ]; then
-            echo "::error::No .8xp/.8xv files found to bundle"
-            exit 1
-          fi
-          cmd=(convbin --oformat 8xg-auto-extract --output artifact/NOTES_BUNDLE.8xg)
-          for f in "${files[@]}"; do
-            cmd+=(--iformat 8x --input "$f")
+          test ${#files[@]} -gt 0
+          group=()
+          total=0
+          part=1
+
+          make_group() {
+            test ${#group[@]} -gt 0 || return 0
+            printf -v output 'artifact/NOTES_%02d.8xg' "$part"
+            args=(--oformat 8xg-auto-extract --output "$output")
+            for item in "${group[@]}"; do
+              args+=(--iformat 8x --input "$item")
+            done
+            convbin "${args[@]}"
+            part=$((part+1))
+            group=()
+            total=0
+          }
+
+          for item in "${files[@]}"; do
+            bytes=$(stat -c '%s' "$item")
+            if [ ${#group[@]} -gt 0 ] && \
+               [ $((total+bytes)) -gt 30000 ]; then
+              make_group
+            fi
+            group+=("$item")
+            total=$((total+bytes))
           done
-          "${cmd[@]}"
+          make_group
 
       - name: Upload artifact bundle
         uses: actions/upload-artifact@v4
